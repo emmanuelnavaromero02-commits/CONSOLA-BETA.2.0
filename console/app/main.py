@@ -97,6 +97,9 @@ app.add_middleware(
 STATIC = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
+SPA_ASSETS = Path(__file__).parent.parent / "frontend" / "dist" / "assets"
+app.mount("/assets", StaticFiles(directory=SPA_ASSETS), name="spa_assets")
+
 
 def _validate_dataset_name(dataset: str) -> None:
     if not DATASET_NAME_RE.fullmatch(dataset or ""):
@@ -2952,8 +2955,9 @@ async def api_admin_users_send_reset(user_id: int, admin: dict = Depends(require
     return {"sent": sent}
 
 
-from app.routers import mcp, pages, security
+from app.routers import mcp, pages, security, app_spa
 
 app.include_router(pages.router)
 app.include_router(mcp.router)
 app.include_router(security.router)
+app.include_router(app_spa.router)
