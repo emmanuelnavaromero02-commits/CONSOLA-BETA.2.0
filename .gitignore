@@ -27,3 +27,5 @@ Thumbs.db
 
 # Docker
 *.log
+console/frontend/node_modules/
+console/frontend/dist/
